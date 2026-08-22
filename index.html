@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OpenRouter モデル料金比較</title>
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+  <header>
+    <h1>OpenRouter モデル料金比較</h1>
+    <p class="subtitle">料金は USD / 100万トークン（1M tokens）で表示しています。データは OpenRouter API から取得しています。左ペインでモデルを選択すると、右ペインで比較できます。</p>
+  </header>
+
+  <main>
+    <div id="status" class="status" hidden></div>
+
+    <div class="split">
+      <!-- 左ペイン: 候補リスト -->
+      <section class="pane candidate" aria-label="モデル候補リスト">
+        <div class="toolbar">
+          <input
+            type="search"
+            id="search"
+            placeholder="モデル名・ID で検索…"
+            autocomplete="off"
+            aria-label="モデル検索"
+          >
+          <button id="clear-btn" type="button" disabled>選択をクリア</button>
+        </div>
+        <div class="filter-bar" role="group" aria-label="表示フィルタ">
+          <label class="filter-item"><input type="checkbox" id="filter-kpi"> 性能KPI有りのみ</label>
+          <label class="filter-item"><input type="checkbox" id="filter-price"> 価格有りのみ</label>
+        </div>
+        <div class="pane-meta">
+          <span id="result-count" class="result-count" aria-live="polite"></span>
+        </div>
+        <div class="candidate-scroll table-wrap">
+          <table id="models-table">
+            <thead>
+              <tr>
+                <th class="chk" aria-hidden="true"></th>
+                <th data-key="name" class="text">モデル</th>
+                <th data-key="provider" class="text">プロバイダ</th>
+                <th data-key="released" class="num sort-desc">提供開始</th>
+                <th data-key="context" class="num">コンテキスト</th>
+                <th data-key="coding" class="num">Coding</th>
+                <th data-key="intelligence" class="num">Intelligence</th>
+                <th data-key="agent" class="num">Agent</th>
+                <th data-key="input" class="num">入力 ($/1M)</th>
+                <th data-key="output" class="num">出力 ($/1M)</th>
+                <th data-key="cache" class="num">キャッシュ読込 ($/1M)</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 右ペイン: 比較表 -->
+      <section class="pane compare" aria-label="モデル比較">
+        <h2 class="pane-title">比較</h2>
+        <div id="compare-empty" class="compare-empty">左ペインで比較したいモデルを選択してください。</div>
+        <div class="compare-scroll table-wrap" id="compare-wrap" hidden>
+          <table id="compare-table">
+            <thead>
+              <tr>
+                <th data-key="name" class="text">モデル</th>
+                <th data-key="released" class="num">提供開始</th>
+                <th data-key="coding" class="num">Coding</th>
+                <th data-key="intelligence" class="num">Intelligence</th>
+                <th data-key="agent" class="num">Agent</th>
+                <th data-key="input" class="num">入力 ($/1M)</th>
+                <th data-key="output" class="num">出力 ($/1M)</th>
+                <th data-key="cache" class="num">キャッシュ読込 ($/1M)</th>
+                <th data-key="description" class="text">説明</th>
+              </tr>
+            </thead>
+            <tbody id="compare-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- 散布図: 選択モデルを 2 つの指標でプロット -->
+    <section class="pane scatter-pane" aria-label="指標散布図">
+      <div class="scatter-head">
+        <h2 class="pane-title">指標散布図</h2>
+        <div class="scatter-controls">
+          <label class="axis-field">X軸
+            <select id="x-axis" aria-label="X軸の指標"></select>
+          </label>
+          <label class="axis-field">Y軸
+            <select id="y-axis" aria-label="Y軸の指標"></select>
+          </label>
+        </div>
+        <span id="scatter-note" class="scatter-note" aria-live="polite"></span>
+      </div>
+      <div id="scatter-empty" class="compare-empty">左ペインでプロットしたいモデルを選択してください。</div>
+      <svg id="scatter-svg" viewBox="0 0 760 460" role="img" aria-label="選択モデルの指標散布図" hidden></svg>
+    </section>
+  </main>
+
+  <script src="app.js?v=4"></script>
+</body>
+</html>
