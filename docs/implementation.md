@@ -86,4 +86,5 @@ OpenRouter モデル料金比較ページの実装メモ。次のセッション
 
 ## Git 状態
 
-- このディレクトリは **git init 済みか未確認**（セッション終了時点で未コミットの可能性あり）。再開時に `git status` で確認し、CLAUDE.md 規約（commit は確認なしでタスク完了後に実行 / push はユーザーに問い合わせ）に従うこと。
+- 2026-08-23 に `git init` 済み（ブランチ `master`）。初回コミット `753f904` に全実装（CLAUDE.md / app.js / index.html / style.css / docs/implementation.md）を含む。
+- リモートは未設定。push はユーザーに問い合わせること（CLAUDE.md 規約）。
