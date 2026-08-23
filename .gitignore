@@ -1,0 +1,18 @@
+# OS 固有ファイル
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# エディタ・IDE
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Claude Code ローカル設定（個人ごとの権限設定）
+.claude/settings.local.json
+
+# ログ・一時ファイル
+*.log
+*.tmp
