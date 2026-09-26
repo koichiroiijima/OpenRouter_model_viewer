@@ -16,3 +16,6 @@ desktop.ini
 # ログ・一時ファイル
 *.log
 *.tmp
+
+# ローカルサーバの PID ファイル
+.server.pid

@@ -15,8 +15,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 OpenRouter の公開 API（`GET https://openrouter.ai/api/v1/models`、CORS 有効）から最新のモデル料金と指標（Coding / Intelligence / Agent）を取得し、モデル一覧と選択モデルの比較を表示する静的 Web ページ。
 
 - 純粋な HTML/CSS/JS のみ。ビルドステップや Node 依存なし。
-- 実行・確認: `python3 -m http.server 8000` → `http://localhost:8000`
+- 実行・確認: `scripts/start.sh`（既定ポート **8001**）→ `http://localhost:8001`。停止は `scripts/stop.sh`。
+  - ポート変更は環境変数 `PORT`（例: `PORT=8000 scripts/start.sh`）。8000 番は別プロセスが占有していることがある。
+  - `python3 -m http.server 8001` を直接実行してもよい。
   - 変更が反映されない場合はブラウザの**ハードリロード**（`Ctrl+Shift+R`）を案内する（過去にキャッシュ起因の問題があった）。
+  - `scripts/` に起動・停止スクリプト（`start.sh` / `stop.sh`）あり。PID は `.server.pid`、ログは `.server.log` に出力。
 
 ## 構成
 
@@ -27,7 +30,7 @@ OpenRouter の公開 API（`GET https://openrouter.ai/api/v1/models`、CORS 有�
 ## 主要ロジック
 
 ### データ取得と正規化（app.js `normalize()`）
-- `GET https://openrouter.ai/api/v1/models` を直接 fetch（CORS 有効、約337モデル）。
+- `GET https://openrouter.ai/api/v1/models` を直接 fetch（CORS 有効。ページ読み込みごとに取得するため常に最新。2026-09 時点で約458モデル）。
 - 各モデルをフラットなオブジェクトに正規化。主なフィールド:
   - 料金は **USD / 100万トークン**（`pricing.prompt` 等の1トークンあたり値を ×1,000,000）。
   - 提供開始日は `created`（Unix秒）→ `released`。`fmtDate()` で日本語の日付（`2026/08/02`）に整形。

@@ -11,14 +11,28 @@ OpenRouter の公開 API から最新のモデル料金と性能指標を取得�
 
 ## 起動方法
 
-1. このフォルダで以下を実行:
+1. 起動スクリプトを実行（既定ポート 8001）:
 
    ```bash
-   python3 -m http.server 8000
+   scripts/start.sh
    ```
 
-2. ブラウザで <http://localhost:8000> を開く
+   ポートを変えたい場合は環境変数 `PORT` を指定します:
 
+   ```bash
+   PORT=8000 scripts/start.sh
+   ```
+
+2. ブラウザで <http://localhost:8001> を開く
+
+3. 停止するとき:
+
+   ```bash
+   scripts/stop.sh
+   ```
+
+> スクリプトを使わず `python3 -m http.server 8001` を直接実行しても構いません。
+>
 > 変更が反映されない場合はハードリロード（`Ctrl+Shift+R`）してください。
 
 ## 操作方法
@@ -46,5 +60,5 @@ OpenRouter の公開 API から最新のモデル料金と性能指標を取得�
 ## 表示内容について
 
 - **単位**: 料金は USD / 100万トークン
-- **データ源**: `GET https://openrouter.ai/api/v1/models`（起動時に取得、約337モデル）
+- **データ源**: `GET https://openrouter.ai/api/v1/models`（ページ読み込み時に毎回取得するため常に最新。2026-09 時点で約458モデル）
 - **「—」表示**: 指標・価格のデータがない項目
